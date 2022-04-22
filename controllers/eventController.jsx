@@ -19,6 +19,7 @@ router.get('/', async (req, res)=>{
 });
 // Create Route
 router.post('/', async (req, res)=>{
+    console.log(req.body)
     try{
         const newEvent = await Event.create(req.body);
         res.send({
@@ -26,9 +27,10 @@ router.post('/', async (req, res)=>{
             data: newEvent
         })
     }catch (err){
+        console.log(err)
         res.send({
             success: false,
-            data: err
+            data: err.message
         })
     }
 })
@@ -68,7 +70,7 @@ router.delete('/:id', async (req, res)=>{
         })
     }
 })
-// Updata Route
+// Update Route
 router.put('/:id', async (req, res)=>{
     try{
         const event = await Event.findByIdAndUpdate(req.params.id, req.body, {new: true});
