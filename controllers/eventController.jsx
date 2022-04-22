@@ -1,8 +1,17 @@
 const express = require('express');
 const router = express.Router();
+const auth = require('../middleware/authController.jsx');
+const authController = require('../middleware/authController.jsx')
+
+// EVENT model
 const Event = require('../models/event.jsx')
 
-// Index Route
+const { config } = require("dotenv");
+
+
+// @route   GET /events
+// @desc    get ALL events
+// @access  public
 router.get('/', async (req, res)=>{
     try{ 
         const events = await Event.find();
@@ -17,8 +26,10 @@ router.get('/', async (req, res)=>{
         })
     }
 });
-// Create Route
-router.post('/', async (req, res)=>{
+// @route   POST /events
+// @desc    Create an events
+// @access  Private
+router.post('/', auth, async (req, res)=>{
     console.log(req.body)
     try{
         const newEvent = await Event.create(req.body);
@@ -36,7 +47,9 @@ router.post('/', async (req, res)=>{
 })
 // New is handled by REACT
 // Edit is handled by REACT
-// Show Route - send individual item
+// @route   GET /events:id
+// @desc    get one event at id
+// @access  public
 router.get('/:id', async (req, res)=>{
     try {
         const event = await Event.findById(req.params.id);
@@ -55,8 +68,10 @@ router.get('/:id', async (req, res)=>{
         })
     }
 })
-// Delete Route 
-router.delete('/:id', async (req, res)=>{
+// @route   DELETE /events:id
+// @desc    Delete an events
+// @access  Private
+router.delete('/:id', auth, async (req, res)=>{
     try{
         const event = await Event.findByIdAndDelete(req.params.id);
         res.send({
@@ -70,7 +85,9 @@ router.delete('/:id', async (req, res)=>{
         })
     }
 })
-// Update Route
+// @route   PUT /events:id
+// @desc    Update an events
+// @access  public
 router.put('/:id', async (req, res)=>{
     try{
         const event = await Event.findByIdAndUpdate(req.params.id, req.body, {new: true});

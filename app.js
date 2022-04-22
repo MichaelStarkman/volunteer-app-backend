@@ -10,9 +10,12 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const morgan = require('morgan');
 const app = express();
+// const session = require('express-session');
+
 // const cloudinary = require("cloudinary").v2;
 
-
+const userContoller = require('./controllers/userController.jsx')
+const authController = require('./controllers/authController.jsx')
 const eventController = require('./controllers/eventController.jsx')
 // ___________________
 // port (set up for hosting w. heroku)
@@ -23,6 +26,7 @@ const port = process.env.PORT || 3001
 // ___________________
 const mongoURI = process.env.MONGO_URI
 
+const jwtSecret = process.env.JWT_SECRET
 // cloudinary.config({
 //   cloud_name: 'lets-dish-cloudinary',
 //   api_key: process.env.CLOUDINARY_API_KEY, 
@@ -48,6 +52,8 @@ app.use(urlencoded({extended: true}));
 app.use(express.json());
 
 app.use('/events', eventController)
+app.use('/users', userContoller)
+app.use('/auth', authController)
 
 
 module.exports = app.listen(port, () => console.log('working on port', port))
