@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const auth = require('../middleware/authController.jsx');
-const authController = require('../middleware/authController.jsx')
+const auth = require('../middleware/auth.jsx')
+
 
 // EVENT model
 const Event = require('../models/event.jsx')
@@ -87,8 +87,8 @@ router.delete('/:id', auth, async (req, res)=>{
 })
 // @route   PUT /events:id
 // @desc    Update an events
-// @access  public
-router.put('/:id', async (req, res)=>{
+// @access  private
+router.put('/:id', auth, async (req, res)=>{
     try{
         const event = await Event.findByIdAndUpdate(req.params.id, req.body, {new: true});
         res.send({

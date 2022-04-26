@@ -3,11 +3,10 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const auth = require('../middleware/authController.jsx');
-const authController = require('../middleware/authController.jsx')
+const auth = require('../../middleware/auth.jsx')
 
 // User Model
-const User = require('../models/user.jsx');
+const User = require('../../models/User.jsx');
 const { config } = require("dotenv");
 
 // @route   POST /auth

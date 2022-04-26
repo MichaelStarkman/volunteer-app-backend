@@ -5,7 +5,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 // User Model
-const User = require('../models/user.jsx');
+const User = require('../../models/User.jsx');
 const { config } = require("dotenv");
 
 // @route   POST /users
@@ -14,6 +14,7 @@ const { config } = require("dotenv");
 
 router.post('/', (req, res)=> {
     const { username, email, password} = req.body;
+    console.log(req.body)
     // Simple Validation
     if(!username || !email || !password) {
         return res.status(400).json({ msg: 'Please enter all fields' })
